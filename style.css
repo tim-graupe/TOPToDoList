@@ -1,0 +1,64 @@
+html, body {
+margin: 0;
+padding: 0;
+}
+
+.header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 25px;
+    background-color: rgb(46,60,76);
+    color:white;
+
+}
+.sidebar{
+    width: 15%;
+    padding: 20px;
+    background-color:  	rgb(170,170,170);
+    height: 100%;
+    display: table-cell;
+}
+
+#content{
+    width: 100%;
+    display: table;
+    height: 100%;
+}
+
+.project-list{
+    list-style-type: none;
+}
+
+
+
+#body-container{
+    display: table-cell;
+}
+
+.addedTask {
+    margin: 1%;
+    padding: 1%;
+    position: relative;
+    width: 75%;
+    background-color: #17141d;
+    color: white;
+    border-radius: 10px;
+    box-shadow: .75rem 0 2.5rem rgb(85, 70, 70);
+    margin-left: 10px;
+  }
+
+  .taskInfoBox {
+
+    display: none;
+    margin: 1%;
+    padding: 1%;
+    position: absolute;
+    width: 50%;
+    right: 0px;
+    background-color: #17141d;
+    color: white;
+    border-radius: 10px;
+    box-shadow: .75rem 0 2.5rem rgb(85, 70, 70);
+    margin-left: 10px;
+  }
