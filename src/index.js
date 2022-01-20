@@ -80,36 +80,39 @@ const taskFactory = (title, description, dueDate, priority) => {
 
 const createNewTask = (project) => {
     manageTasks(project)
-    const newTaskButton = document.createElement('button');
-    newTaskButton.textContent = "New task"
-    currentProject.appendChild(newTaskButton)
-    newTaskButton.addEventListener('click', () => {
-        const getTask = prompt("Task name?");
+    const newTaskInput = document.createElement('input');
+    newTaskInput.setAttribute('class', 'inputField')
+    newTaskInput.textContent = "New task"
+    currentProject.appendChild(newTaskInput)
+    newTaskInput.addEventListener('keypress', (e) => {
+        if (e.key === "Enter"){
+        const getTask = newTaskInput.value;
         const newTask = taskFactory(getTask);
-        const taskDiv = document.createElement('div');
-        const taskInfo = document.createElement('div');
+        const taskLi = document.createElement('li');
+        const taskInfo = document.createElement('li');
         taskInfo.className = 'taskInfoBox';
-        taskInfo.textContent = 'test'
-        taskDiv.textContent = getTask;
-        taskDiv.className = 'addedTask';
-        taskDiv.appendChild(taskInfo)
+        taskInfo.textContent = newTask.title
+        taskLi.textContent = getTask;
+        taskLi.className = 'addedTask';
+        taskLi.appendChild(taskInfo)
         project.todos.push(getTask);
-        taskDiv.addEventListener('click', () =>{
+        taskLi.addEventListener('click', () =>{
             if (taskInfo.style.display == 'none') { 
-        taskInfo.setAttribute('style', 'display:block')
-        } else {
-            taskInfo.setAttribute('style', 'display:none')
-        }
-            
-        })
-        currentProject.appendChild(taskDiv);
-
-        
-    })
+                taskInfo.setAttribute('style', 'display:block')
+                } else {
+                    taskInfo.setAttribute('style', 'display:none')
+                }
+                    
+                })
+        currentProject.appendChild(taskLi);
+        newTaskInput.value = ''  
+    }})
     localStorage.setItem("tasks", JSON.stringify(savedTasks));
+
 
 }
 
 
 
 //todo: 1) edit project names, 2) add due dates and priorities, mark complete, delete
+//known issues: new tasks on pre-existing lists added below input box, mobile design needs improvement

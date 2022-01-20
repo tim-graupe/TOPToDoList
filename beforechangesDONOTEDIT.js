@@ -3,53 +3,8 @@ const projectList = document.getElementById('project-list');
 const currentProject = document.getElementById('current-project-tasks');
 const projectTitle = document.getElementById('current-project-title')
 const projects = JSON.parse(localStorage.getItem('projects')) || [];
+const bodyContainer = document.getElementById('body-container')
 let savedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
-
-
-
-//DO NOT EDIT //DO NOT EDIT 
-//DO NOT EDIT //DO NOT EDIT //DO NOT EDIT //DO NOT EDIT 
-//DO NOT EDIT //DO NOT EDIT //DO NOT EDIT //DO NOT EDIT 
-//DO NOT EDIT //DO NOT EDIT //DO NOT EDIT //DO NOT EDIT 
-//DO NOT EDIT //DO NOT EDIT //DO NOT EDIT //DO NOT EDIT 
-//DO NOT EDIT //DO NOT EDIT //DO NOT EDIT //DO NOT EDIT 
-//DO NOT EDIT //DO NOT EDIT //DO NOT EDIT //DO NOT EDIT 
-//DO NOT EDIT //DO NOT EDIT //DO NOT EDIT //DO NOT EDIT 
-//DO NOT EDIT //DO NOT EDIT //DO NOT EDIT //DO NOT EDIT 
-//DO NOT EDIT //DO NOT EDIT //DO NOT EDIT //DO NOT EDIT 
-//DO NOT EDIT //DO NOT EDIT //DO NOT EDIT //DO NOT EDIT 
-//DO NOT EDIT //DO NOT EDIT //DO NOT EDIT //DO NOT EDIT 
-//DO NOT EDIT //DO NOT EDIT //DO NOT EDIT //DO NOT EDIT 
-//DO NOT EDIT //DO NOT EDIT //DO NOT EDIT //DO NOT EDIT 
-//DO NOT EDIT //DO NOT EDIT //DO NOT EDIT //DO NOT EDIT 
-//DO NOT EDIT //DO NOT EDIT //DO NOT EDIT //DO NOT EDIT 
-//DO NOT EDIT //DO NOT EDIT //DO NOT EDIT //DO NOT EDIT 
-//DO NOT EDIT //DO NOT EDIT //DO NOT EDIT //DO NOT EDIT 
-//DO NOT EDIT //DO NOT EDIT //DO NOT EDIT //DO NOT EDIT 
-//DO NOT EDIT //DO NOT EDIT //DO NOT EDIT //DO NOT EDIT 
-//DO NOT EDIT //DO NOT EDIT //DO NOT EDIT //DO NOT EDIT 
-//DO NOT EDIT //DO NOT EDIT //DO NOT EDIT //DO NOT EDIT 
-//DO NOT EDIT //DO NOT EDIT //DO NOT EDIT //DO NOT EDIT 
-//DO NOT EDIT //DO NOT EDIT //DO NOT EDIT //DO NOT EDIT 
-//DO NOT EDIT //DO NOT EDIT //DO NOT EDIT //DO NOT EDIT 
-//DO NOT EDIT //DO NOT EDIT //DO NOT EDIT //DO NOT EDIT 
-//DO NOT EDIT //DO NOT EDIT //DO NOT EDIT //DO NOT EDIT 
-//DO NOT EDIT //DO NOT EDIT //DO NOT EDIT //DO NOT EDIT 
-//DO NOT EDIT //DO NOT EDIT //DO NOT EDIT //DO NOT EDIT 
-//DO NOT EDIT //DO NOT EDIT //DO NOT EDIT //DO NOT EDIT 
-//DO NOT EDIT //DO NOT EDIT //DO NOT EDIT //DO NOT EDIT 
-//DO NOT EDIT //DO NOT EDIT //DO NOT EDIT //DO NOT EDIT 
-//DO NOT EDIT //DO NOT EDIT //DO NOT EDIT //DO NOT EDIT 
-//DO NOT EDIT //DO NOT EDIT //DO NOT EDIT //DO NOT EDIT 
-//DO NOT EDIT //DO NOT EDIT //DO NOT EDIT //DO NOT EDIT 
-//DO NOT EDIT //DO NOT EDIT //DO NOT EDIT //DO NOT EDIT 
-//DO NOT EDIT //DO NOT EDIT //DO NOT EDIT //DO NOT EDIT 
-//DO NOT EDIT //DO NOT EDIT //DO NOT EDIT //DO NOT EDIT 
-//DO NOT EDIT //DO NOT EDIT //DO NOT EDIT //DO NOT EDIT 
-//DO NOT EDIT //DO NOT EDIT //DO NOT EDIT //DO NOT EDIT 
-//DO NOT EDIT //DO NOT EDIT 
-
-
 
 createProject.addEventListener('click', () => {
     createNewProject()
@@ -124,25 +79,34 @@ const taskFactory = (title, description, dueDate, priority) => {
 
 }
 
-const createNewTask = (project) => {
+const createNewTask = (project) =>{ 
     manageTasks(project)
-    const newTaskButton = document.createElement('button');
-    newTaskButton.textContent = "New task"
-    currentProject.appendChild(newTaskButton)
-    newTaskButton.addEventListener('click', () => {
-        const getTask = prompt("Task name?");
-        const taskDiv = document.createElement('div');
-        taskDiv.textContent = getTask;
-        taskDiv.className = 'addedTask';
-        project.todos.push(getTask)
-        currentProject.appendChild(taskDiv)
+    const newTaskInput = document.createElement('input');
+    newTaskInput.setAttribute('class', 'inputField')
+    newTaskInput.textContent = "New task"
+    currentProject.appendChild(newTaskInput)
+    newTaskInput.addEventListener('keypress', (e) => {
+        if (e.key === "Enter"){
+        const getTask = newTaskInput.value;
+        const newTask = taskFactory(getTask);
+        const taskLi = document.createElement('li');
+        const taskInfo = document.createElement('li');
+        taskInfo.className = 'taskInfoBox';
+        taskInfo.textContent = newTask.title
+        taskLi.textContent = getTask;
+        taskLi.className = 'addedTask';
+        taskLi.appendChild(taskInfo)
+        project.todos.push(getTask);
+        taskLi.addEventListener('click', () =>{
 
-        
-    })
+            displayTaskInfo(taskInfo)
+        })
+        currentProject.appendChild(taskLi);
+
+        newTaskInput.value = ''  
+    }})
     localStorage.setItem("tasks", JSON.stringify(savedTasks));
 
 }
-
-
 
 //todo: 1) edit project names, 2) add due dates and priorities, mark complete, delete

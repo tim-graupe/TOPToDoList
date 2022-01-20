@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -5,14 +6,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>To Do list</title>
         <link rel="stylesheet" href="style.css"/>
-    
+        <script src="/src/index.js" defer></script> 
+
     </head>
     <body>
         <header class="header">
             Toodie's To Do List
         </header>
         <div id="content">
-        <div class="sidebar">
+        <div class="float-child" id="sidebar">
                 <h2>Projects</h2>
                 <ul id="project-list" class="project-list">
      
@@ -26,13 +28,12 @@
                     </div>
         
         </div>
-    <div id="body-container">
+    <div class="float-child" id="body-container">
        <h1><div id="current-project-title"></div></h1>
             <section id="current-project-tasks"></section>
     
     </div>
     </div>
-    <script src="main.js" defer></script> 
 
     </body>
 </html>
