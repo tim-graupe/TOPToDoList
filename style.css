@@ -43,6 +43,9 @@ li {
     box-shadow: .75rem 0 2.5rem rgb(85, 70, 70);
     margin-left: 10px;
   }
+  .taskBar {
+    width: 50%; 
+  }
 
   .taskInfoBox {
 
@@ -59,10 +62,16 @@ li {
     margin-left: 10px;
   }
 
-  .inputField{
+  #inputField{
     padding: 10px;
     border-radius:20px;
+
     
+  }
+
+  #projectTitle {
+    float: left; 
+    width: 50%; 
   }
 
 
