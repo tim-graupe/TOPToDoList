@@ -3,7 +3,6 @@ const projectList = document.getElementById('project-list');
 const currentProject = document.getElementById('current-project-tasks');
 const projectTitle = document.getElementById('current-project-title')
 const projects = JSON.parse(localStorage.getItem('projects')) || [];
-const bodyContainer = document.getElementById('body-container')
 let savedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
 createProject.addEventListener('click', () => {
@@ -73,40 +72,45 @@ const manageTasks  = (project) => {
 
 }
 
-const taskFactory = (title, description, dueDate, priority) => {
-
-    return {title, description, dueDate, priority}
-
+function Task(title, description, dueDate, priority) {
+    this.title = title;
+    this.description = description;
+    this.dueDate = dueDate;
+    this.priority = priority;    
 }
 
-const createNewTask = (project) =>{ 
+const createNewTask = (project) => {
     manageTasks(project)
     const newTaskInput = document.createElement('input');
     newTaskInput.setAttribute('class', 'inputField')
     newTaskInput.textContent = "New task"
     currentProject.appendChild(newTaskInput)
+
     newTaskInput.addEventListener('keypress', (e) => {
         if (e.key === "Enter"){
         const getTask = newTaskInput.value;
-        const newTask = taskFactory(getTask);
-        const taskLi = document.createElement('li');
-        const taskInfo = document.createElement('li');
-        taskInfo.className = 'taskInfoBox';
-        taskInfo.textContent = newTask.title
-        taskLi.textContent = getTask;
-        taskLi.className = 'addedTask';
-        taskLi.appendChild(taskInfo)
+        const newTask = new Task(getTask, "Add Description", "Change Due Date", 'Set Priority');
         project.todos.push(getTask);
-        taskLi.addEventListener('click', () =>{
-
-            displayTaskInfo(taskInfo)
-        })
-        currentProject.appendChild(taskLi);
-
+        manageTasks(project)
+        console.log(project.todos);
+        localStorage.setItem("tasks", JSON.stringify(savedTasks));
+        getTask.addEventListener('click', () =>{
+            if (taskInfo.style.display == 'none') { 
+                taskInfo.setAttribute('style', 'display:block')
+                } else {
+                    taskInfo.setAttribute('style', 'display:none')
+                }
+                    
+                })
+        currentProject.appendChild(getTask);
         newTaskInput.value = ''  
     }})
     localStorage.setItem("tasks", JSON.stringify(savedTasks));
 
+
 }
 
+
+
 //todo: 1) edit project names, 2) add due dates and priorities, mark complete, delete
+//known issues: new tasks on pre-existing lists added below input box, mobile design needs improvement

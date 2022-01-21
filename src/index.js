@@ -56,13 +56,14 @@ const manageTasks  = (project) => {
     while (currentProject.firstChild) {
         currentProject.removeChild(currentProject.firstChild)
     }
+    //add displaying descriptions here? (below?)
     project.todos.forEach(todo => {
-        const div = document.createElement('div');
-        div.textContent = todo;
-        div.className = 'addedTask'
-        currentProject.appendChild(div)
+        const li = document.createElement('li');
+        li.textContent = todo;
+        li.className = 'addedTask'
+        currentProject.appendChild(li)
         savedTasks.push(todo)
-        div.addEventListener('click', () => {
+        li.addEventListener('click', () => {
             console.log(todo)
         })
     localStorage.setItem("tasks", JSON.stringify(savedTasks));
@@ -72,44 +73,43 @@ const manageTasks  = (project) => {
 
 }
 
-const taskFactory = (title, description, dueDate, priority) => {
-
-    return {title, description, dueDate, priority}
-
+function Task(title, description, dueDate, priority) {
+    this.title = title;
+    this.description = description;
+    this.dueDate = dueDate;
+    this.priority = priority;    
 }
 
 const createNewTask = (project) => {
+    let runTask = true;
     manageTasks(project)
     const newTaskInput = document.createElement('input');
-    newTaskInput.setAttribute('class', 'inputField')
-    newTaskInput.textContent = "New task"
+    newTaskInput.setAttribute('id', 'inputField')
     currentProject.appendChild(newTaskInput)
+
     newTaskInput.addEventListener('keypress', (e) => {
         if (e.key === "Enter"){
         const getTask = newTaskInput.value;
-        const newTask = taskFactory(getTask);
-        const taskLi = document.createElement('li');
-        const taskInfo = document.createElement('li');
-        taskInfo.className = 'taskInfoBox';
-        taskInfo.textContent = newTask.title
-        taskLi.textContent = getTask;
-        taskLi.className = 'addedTask';
-        taskLi.appendChild(taskInfo)
-        project.todos.push(getTask);
-        taskLi.addEventListener('click', () =>{
-            if (taskInfo.style.display == 'none') { 
-                taskInfo.setAttribute('style', 'display:block')
-                } else {
-                    taskInfo.setAttribute('style', 'display:none')
-                }
+        const newTask = new Task(getTask, "Add Description", "Change Due Date", 'Set Priority');
+        project.todos.push(newTask.title);
+        manageTasks(project)
+        console.log(project.todos);
+        localStorage.setItem("tasks", JSON.stringify(savedTasks));
+        // getTask.addEventListener('click', () =>{
+        //     if (taskInfo.style.display == 'none') { 
+        //         taskInfo.setAttribute('style', 'display:block')
+        //         } else {
+        //             taskInfo.setAttribute('style', 'display:none')
+        //         }
                     
-                })
-        currentProject.appendChild(taskLi);
-        newTaskInput.value = ''  
+        //         })
+        // currentProject.appendChild(getTask);
+        newTaskInput.value = '';
+        createNewTask(project);
+
+        return
     }})
     localStorage.setItem("tasks", JSON.stringify(savedTasks));
-
-
 }
 
 
