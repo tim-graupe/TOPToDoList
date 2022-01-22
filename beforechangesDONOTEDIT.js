@@ -56,13 +56,14 @@ const manageTasks  = (project) => {
     while (currentProject.firstChild) {
         currentProject.removeChild(currentProject.firstChild)
     }
+    //add displaying descriptions here? (below?)
     project.todos.forEach(todo => {
-        const div = document.createElement('div');
-        div.textContent = todo;
-        div.className = 'addedTask'
-        currentProject.appendChild(div)
+        const li = document.createElement('li');
+        li.textContent = todo;
+        li.className = 'addedTask'
+        currentProject.appendChild(li)
         savedTasks.push(todo)
-        div.addEventListener('click', () => {
+        li.addEventListener('click', () => {
             console.log(todo)
         })
     localStorage.setItem("tasks", JSON.stringify(savedTasks));
@@ -80,34 +81,34 @@ function Task(title, description, dueDate, priority) {
 }
 
 const createNewTask = (project) => {
+    let runTask = true;
     manageTasks(project)
     const newTaskInput = document.createElement('input');
     newTaskInput.setAttribute('class', 'inputField')
-    newTaskInput.textContent = "New task"
-    currentProject.appendChild(newTaskInput)
+    projectTitle.appendChild(newTaskInput)
 
     newTaskInput.addEventListener('keypress', (e) => {
         if (e.key === "Enter"){
+        e.preventDefault()
         const getTask = newTaskInput.value;
         const newTask = new Task(getTask, "Add Description", "Change Due Date", 'Set Priority');
-        project.todos.push(getTask);
+        project.todos.push(newTask.title);
         manageTasks(project)
         console.log(project.todos);
         localStorage.setItem("tasks", JSON.stringify(savedTasks));
-        getTask.addEventListener('click', () =>{
-            if (taskInfo.style.display == 'none') { 
-                taskInfo.setAttribute('style', 'display:block')
-                } else {
-                    taskInfo.setAttribute('style', 'display:none')
-                }
+        // getTask.addEventListener('click', () =>{
+        //     if (taskInfo.style.display == 'none') { 
+        //         taskInfo.setAttribute('style', 'display:block')
+        //         } else {
+        //             taskInfo.setAttribute('style', 'display:none')
+        //         }
                     
-                })
-        currentProject.appendChild(getTask);
-        newTaskInput.value = ''  
+        //         })
+        // currentProject.appendChild(getTask);
+        newTaskInput.value = '';
+
     }})
     localStorage.setItem("tasks", JSON.stringify(savedTasks));
-
-
 }
 
 
