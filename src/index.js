@@ -1,12 +1,13 @@
 const createProject = document.getElementById('new-project-btn');
 const projectList = document.getElementById('project-list');
 const currentProject = document.getElementById('current-project-tasks');
-const projectTitle = document.getElementById('current-project-title')
+const projectTitle = document.getElementById('current-project-title');
+projectTitle.setAttribute('id', 'projectTitle')
 const projects = JSON.parse(localStorage.getItem('projects')) || [];
 let savedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
 createProject.addEventListener('click', () => {
-    createNewProject()
+    createNewProject();
 });
 
 
@@ -18,12 +19,21 @@ const projectFactory = (title) => {
 
 
 
+//edit project
+// editBtn.addEventListener('click', () => {
+//     project.title = prompt('Change name')
+//     if (project.title.length > 0) {;
+//     li.textContent = project.title;
+//     li.appendChild(editBtn);
+//     li.appendChild(deleteBtn);
+//     }
+// })
 const createNewProject = () => {
-    console.log(projects)
     const getTitle = prompt("Project name?");
+
     if (getTitle == "") {
         alert("Empty field!")
-    } else if 
+    } else if
         (projects.some(project => project.title == getTitle)){
             alert("Duplicate project name!")
         } else {
@@ -33,18 +43,56 @@ const createNewProject = () => {
     localStorage.setItem('projects', JSON.stringify(projects))
 }}
 
-
-
 const appendToSidebarList = (project) => {
-    const node = document.createElement('div');
-    node.setAttribute('id', 'listNode')
+    const node = document.createElement('li');
+    const editBtn = document.createElement('div');
+    const deleteBtn = document.createElement('div');
+    editBtn.setAttribute('class', 'material-icons')
+    editBtn.textContent = 'edit'
+    deleteBtn.textContent = 'delete';
+    deleteBtn.setAttribute('class', 'material-icons')
+    node.setAttribute('id', 'list-node');
     node.textContent = project.title;
+    node.appendChild(editBtn);
+    node.appendChild(deleteBtn);
     projectList.appendChild(node);
     node.addEventListener('click', () => {
         projectTitle.textContent = project.title;
-        const todoList = document.createElement('div');
         createNewTask(project)
-     }) 
+     });
+    editBtn.addEventListener('click', (e) => {
+        e.stopPropagation()
+
+        project.title = prompt('Change name')
+        if (project.title.length > 0) {
+        node.textContent = project.title;
+        node.appendChild(editBtn);
+        node.appendChild(deleteBtn);
+        localStorage.setItem("tasks", JSON.stringify(savedTasks));
+        localStorage.setItem('projects', JSON.stringify(projects));
+
+        } else if (project.title == null) {
+            return
+        }
+    })
+
+    deleteBtn.addEventListener('click', (e) => {
+        e.stopPropagation()
+        let text = 'Are you sure you wish to delete your ' + project.title + ' project?'
+        if (confirm(text) == true){
+        for(var i = projects.length - 1; i >= 0; i--) {
+            if(projects[i].title === project.title) {
+               projects.splice(i, 1);
+               projectList.removeChild(node)
+               localStorage.setItem("tasks", JSON.stringify(savedTasks));
+               localStorage.setItem('projects', JSON.stringify(projects));
+            }
+        }} else {
+            return
+        }
+
+    })
+
 
 }
 projects.forEach(appendToSidebarList);
@@ -52,23 +100,98 @@ projects.forEach(appendToSidebarList);
 
 
 const manageTasks  = (project) => {
+    JSON.stringify(projects)
 
     while (currentProject.firstChild) {
         currentProject.removeChild(currentProject.firstChild)
     }
     //add displaying descriptions here? (below?)
     project.todos.forEach(todo => {
-
         const li = document.createElement('li');
-        li.textContent = todo;
-        li.className = 'addedTask'
-        currentProject.appendChild(li)
-        savedTasks.push(todo)
-        li.addEventListener('click', () => {
-            console.log(todo)
+        const deleteBtn = document.createElement('div');
+        deleteBtn.setAttribute('class', 'material-icons');
+        deleteBtn.textContent = 'delete';
+
+        const editBtn = document.createElement('div');
+        editBtn.setAttribute('class', 'material-icons');
+        editBtn.textContent = 'edit';
+
+        const setPriority = document.createElement('div');
+        setPriority.setAttribute('class', 'material-icons');
+        setPriority.textContent = 'priority_high';
+
+        const completeTask = document.createElement('div');
+        completeTask.setAttribute('class', 'material-icons');
+        completeTask.textContent = 'done_outline';
+
+        const dueDate = document.createElement('div');
+        dueDate.setAttribute('class', 'material-icons');
+        dueDate.textContent = 'event'
+
+        li.textContent = todo.title;
+        li.className = 'addedTask';
+        li.appendChild(editBtn);
+        li.appendChild(deleteBtn);
+        li.appendChild(setPriority);
+        li.appendChild(completeTask);
+        li.appendChild(dueDate);
+
+
+        currentProject.appendChild(li);
+        savedTasks.push(todo);
+        deleteBtn.addEventListener('click', () => {
+            for(var i = project.todos.length - 1; i >= 0; i--) {
+                if(project.todos[i].title === todo.title) {
+                   project.todos.splice(i, 1);
+                   currentProject.removeChild(li);
+                   localStorage.setItem("tasks", JSON.stringify(savedTasks));
+
+                };
+            };
+
+        });
+
+        editBtn.addEventListener('click', () => {
+            todo.title = prompt('Change name')
+            if (todo.title.length > 0) {
+            li.textContent = todo.title;
+            li.appendChild(editBtn);
+            li.appendChild(deleteBtn);
+            localStorage.setItem("tasks", JSON.stringify(savedTasks));
+
+            } else if (todo.title == null) {
+                return
+            }
+        })
+
+        setPriority.addEventListener('click', () => {
+            if (setPriority.style.color == 'red') {
+                setPriority.style.color = 'yellow';
+                todo.priority = 'Medium';
+            } else if (setPriority.style.color == 'yellow') {
+                setPriority.style.color = 'green'
+                todo.priority = 'Low';
+
+            } else {
+                setPriority.style.color = 'red';
+                todo.priority = 'High';
+            }
+        })
+
+        completeTask.addEventListener('click', () => {
+            if (li.style.textDecoration == 'none') {
+                li.style.textDecoration = 'line-through'
+            } else {
+                li.style.textDecoration = 'none'
+            }
+        })
+
+        dueDate.addEventListener('click', () => {
+            let date = new date()
+            console.log(date)
         })
     localStorage.setItem("tasks", JSON.stringify(savedTasks));
-    localStorage.setItem('projects', JSON.stringify(projects))
+    localStorage.setItem('projects', JSON.stringify(projects));
 
     })
 
@@ -84,10 +207,11 @@ function Task(title, description, dueDate, priority) {
 const createNewTask = (project) => {
     manageTasks(project);
     const newTaskInput = document.createElement('input');
-    const newTaskBtn = document.createElement('button');
-    newTaskBtn.textContent = "button"
-    newTaskInput.setAttribute('class', 'input-section')
+    const newTaskBtn = document.createElement('div');
+    newTaskInput.setAttribute('class', 'input-section');
     newTaskBtn.setAttribute('class', 'input-section');
+    newTaskBtn.textContent = "send";
+
     projectTitle.appendChild(newTaskBtn);
     projectTitle.appendChild(newTaskInput);
  
@@ -97,40 +221,20 @@ const createNewTask = (project) => {
         if (e.key === "Enter"){
         e.preventDefault()
         const getTask = newTaskInput.value;
-        const newTask = new Task(getTask, "Add Description", "Change Due Date", 'Set Priority');
-        project.todos.push(newTask.title);
+        const newTask = new Task(getTask, "Add Description", "Change Due Date", "Set Priority");
+        project.todos.push(newTask);
         manageTasks(project)
-        console.log(project.todos);
         localStorage.setItem("tasks", JSON.stringify(savedTasks));
-        // getTask.addEventListener('click', () =>{
-        //     if (taskInfo.style.display == 'none') { 
-        //         taskInfo.setAttribute('style', 'display:block')
-        //         } else {
-        //             taskInfo.setAttribute('style', 'display:none')
-        //         }
-                    
-        //         })
-        // currentProject.appendChild(getTask);
         newTaskInput.value = '';
 
     }})
     newTaskBtn.addEventListener('click', (e) => {
         e.preventDefault()
-        const getTask = newTaskInput.value;
-        const newTask = new Task(getTask, "Add Description", "Change Due Date", 'Set Priority');
-        project.todos.push(newTask.title);
+        const getTaskName = newTaskInput.value;
+        const newTask = new Task(getTaskName, "Add Description", "Change Due Date", "Set Priority");
+        project.todos.push(newTask);
         manageTasks(project)
-        console.log(newTask);
         localStorage.setItem("tasks", JSON.stringify(savedTasks));
-        // getTask.addEventListener('click', () =>{
-        //     if (taskInfo.style.display == 'none') { 
-        //         taskInfo.setAttribute('style', 'display:block')
-        //         } else {
-        //             taskInfo.setAttribute('style', 'display:none')
-        //         }
-                    
-        //         })
-        // currentProject.appendChild(getTask);
         newTaskInput.value = '';
     })
     localStorage.setItem("tasks", JSON.stringify(savedTasks));
@@ -138,5 +242,5 @@ const createNewTask = (project) => {
 
 
 
-//todo: 1) edit project names, 2) add due dates and priorities, mark complete, delete
-//known issues: new tasks on pre-existing lists added below input box, mobile design needs improvement
+//todo:  2) change due date, priority, description and title
+//known issues: mobile design needs improvement, refreshing page clears current project

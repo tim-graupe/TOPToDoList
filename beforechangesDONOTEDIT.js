@@ -52,6 +52,7 @@ projects.forEach(appendToSidebarList);
 
 
 const manageTasks  = (project) => {
+    JSON.stringify(projects)
 
     while (currentProject.firstChild) {
         currentProject.removeChild(currentProject.firstChild)
@@ -59,12 +60,14 @@ const manageTasks  = (project) => {
     //add displaying descriptions here? (below?)
     project.todos.forEach(todo => {
         const li = document.createElement('li');
-        li.textContent = todo;
+        li.textContent = todo.title;
         li.className = 'addedTask'
         currentProject.appendChild(li)
         savedTasks.push(todo)
         li.addEventListener('click', () => {
-            console.log(todo)
+            console.log(todo.priority)
+            console.log(todo.description)
+            console.log(todo.dueDate)
         })
     localStorage.setItem("tasks", JSON.stringify(savedTasks));
     localStorage.setItem('projects', JSON.stringify(projects))
@@ -77,24 +80,49 @@ function Task(title, description, dueDate, priority) {
     this.title = title;
     this.description = description;
     this.dueDate = dueDate;
-    this.priority = priority;    
+    this.priority = priority;
 }
 
 const createNewTask = (project) => {
-    let runTask = true;
-    manageTasks(project)
+    manageTasks(project);
     const newTaskInput = document.createElement('input');
-    newTaskInput.setAttribute('class', 'inputField')
-    projectTitle.appendChild(newTaskInput)
+    const newTaskBtn = document.createElement('button');
+    newTaskBtn.textContent = "button";
+    newTaskInput.setAttribute('class', 'input-section')
+    newTaskBtn.setAttribute('class', 'input-section');
+    projectTitle.appendChild(newTaskBtn);
+    projectTitle.appendChild(newTaskInput);
+ 
+
 
     newTaskInput.addEventListener('keypress', (e) => {
         if (e.key === "Enter"){
         e.preventDefault()
         const getTask = newTaskInput.value;
-        const newTask = new Task(getTask, "Add Description", "Change Due Date", 'Set Priority');
-        project.todos.push(newTask.title);
+        const newTask = new Task(getTask, "Add Description", "Change Due Date", "Set Priority");
+        project.todos.push(newTask);
         manageTasks(project)
         console.log(project.todos);
+        localStorage.setItem("tasks", JSON.stringify(savedTasks));
+        getTask.addEventListener('click', () =>{
+            if (taskInfo.style.display == 'none') { 
+                taskInfo.setAttribute('style', 'display:block')
+                } else {
+                    taskInfo.setAttribute('style', 'display:none')
+                }
+                    
+                })
+        currentProject.appendChild(getTask);
+        newTaskInput.value = '';
+
+    }})
+    newTaskBtn.addEventListener('click', (e) => {
+        e.preventDefault()
+        const getTask = newTaskInput.value;
+        const newTask = new Task(getTask, "Add Description", "Change Due Date", "Set Priority");
+        project.todos.push(newTask.title);
+        manageTasks(project)
+        console.log(newTask);
         localStorage.setItem("tasks", JSON.stringify(savedTasks));
         // getTask.addEventListener('click', () =>{
         //     if (taskInfo.style.display == 'none') { 
@@ -106,8 +134,7 @@ const createNewTask = (project) => {
         //         })
         // currentProject.appendChild(getTask);
         newTaskInput.value = '';
-
-    }})
+    })
     localStorage.setItem("tasks", JSON.stringify(savedTasks));
 }
 

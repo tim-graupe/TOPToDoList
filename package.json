@@ -11,5 +11,8 @@
   "keywords": [],
   "devDependencies": {
     "webpack-cli": "^4.9.1"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21"
   }
 }
