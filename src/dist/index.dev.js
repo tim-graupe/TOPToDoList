@@ -17,16 +17,7 @@ var projectFactory = function projectFactory(title) {
     title: title,
     todos: todos
   };
-}; //edit project
-// editBtn.addEventListener('click', () => {
-//     project.title = prompt('Change name')
-//     if (project.title.length > 0) {;
-//     li.textContent = project.title;
-//     li.appendChild(editBtn);
-//     li.appendChild(deleteBtn);
-//     }
-// })
-
+};
 
 var createNewProject = function createNewProject() {
   var getTitle = prompt("Project name?");
@@ -119,7 +110,7 @@ var manageTasks = function manageTasks(project) {
     var completeTask = document.createElement('div');
     completeTask.setAttribute('class', 'material-icons');
     completeTask.textContent = 'done_outline';
-    var dueDate = document.createElement('div');
+    var dueDate = document.createElement('date');
     dueDate.setAttribute('class', 'material-icons');
     dueDate.textContent = 'event';
     li.textContent = todo.title;
@@ -196,10 +187,10 @@ function Task(title, description, dueDate, priority) {
 var createNewTask = function createNewTask(project) {
   manageTasks(project);
   var newTaskInput = document.createElement('input');
-  var newTaskBtn = document.createElement('div');
+  var newTaskBtn = document.createElement('button');
   newTaskInput.setAttribute('class', 'input-section');
   newTaskBtn.setAttribute('class', 'input-section');
-  newTaskBtn.textContent = "send";
+  newTaskBtn.textContent = "Send";
   projectTitle.appendChild(newTaskBtn);
   projectTitle.appendChild(newTaskInput);
   newTaskInput.addEventListener('keypress', function (e) {

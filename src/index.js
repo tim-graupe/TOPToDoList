@@ -17,17 +17,6 @@ const projectFactory = (title) => {
     return {title, todos}
 };
 
-
-
-//edit project
-// editBtn.addEventListener('click', () => {
-//     project.title = prompt('Change name')
-//     if (project.title.length > 0) {;
-//     li.textContent = project.title;
-//     li.appendChild(editBtn);
-//     li.appendChild(deleteBtn);
-//     }
-// })
 const createNewProject = () => {
     const getTitle = prompt("Project name?");
 
@@ -124,7 +113,7 @@ const manageTasks  = (project) => {
         completeTask.setAttribute('class', 'material-icons');
         completeTask.textContent = 'done_outline';
 
-        const dueDate = document.createElement('div');
+        const dueDate = document.createElement('date');
         dueDate.setAttribute('class', 'material-icons');
         dueDate.textContent = 'event'
 
@@ -209,10 +198,10 @@ function Task(title, description, dueDate, priority) {
 const createNewTask = (project) => {
     manageTasks(project);
     const newTaskInput = document.createElement('input');
-    const newTaskBtn = document.createElement('div');
+    const newTaskBtn = document.createElement('button');
     newTaskInput.setAttribute('class', 'input-section');
     newTaskBtn.setAttribute('class', 'input-section');
-    newTaskBtn.textContent = "send";
+    newTaskBtn.textContent = "Send";
 
     projectTitle.appendChild(newTaskBtn);
     projectTitle.appendChild(newTaskInput);
