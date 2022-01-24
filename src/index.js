@@ -145,6 +145,7 @@ const manageTasks  = (project) => {
                    project.todos.splice(i, 1);
                    currentProject.removeChild(li);
                    localStorage.setItem("tasks", JSON.stringify(savedTasks));
+                   localStorage.setItem('projects', JSON.stringify(projects));
 
                 };
             };
@@ -158,6 +159,7 @@ const manageTasks  = (project) => {
             li.appendChild(editBtn);
             li.appendChild(deleteBtn);
             localStorage.setItem("tasks", JSON.stringify(savedTasks));
+            localStorage.setItem('projects', JSON.stringify(projects));
 
             } else if (todo.title == null) {
                 return
@@ -180,7 +182,7 @@ const manageTasks  = (project) => {
 
         completeTask.addEventListener('click', () => {
             if (li.style.textDecoration == 'none') {
-                li.style.textDecoration = 'line-through'
+                li.style.textDecoration = 'line-through';
             } else {
                 li.style.textDecoration = 'none'
             }

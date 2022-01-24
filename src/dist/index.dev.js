@@ -137,6 +137,7 @@ var manageTasks = function manageTasks(project) {
           project.todos.splice(i, 1);
           currentProject.removeChild(li);
           localStorage.setItem("tasks", JSON.stringify(savedTasks));
+          localStorage.setItem('projects', JSON.stringify(projects));
         }
 
         ;
@@ -152,6 +153,7 @@ var manageTasks = function manageTasks(project) {
         li.appendChild(editBtn);
         li.appendChild(deleteBtn);
         localStorage.setItem("tasks", JSON.stringify(savedTasks));
+        localStorage.setItem('projects', JSON.stringify(projects));
       } else if (todo.title == null) {
         return;
       }
