@@ -56,7 +56,6 @@ li {
     padding: 1%;
     position: relative;
     background-color: #c5c8c6;
-    color: white;
     border-radius: 10px;
     box-shadow: .75rem 0 2.5rem rgb(85, 70, 70);
     margin-left: 10px;
@@ -80,7 +79,6 @@ li {
     width: 50%;
     right: 0px;
     background-color: #8d6e19;
-    color: white;
     border-radius: 10px;
     box-shadow: .75rem 0 2.5rem rgb(85, 70, 70);
     margin-left: 10px;
