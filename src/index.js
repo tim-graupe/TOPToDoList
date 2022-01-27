@@ -1,6 +1,7 @@
-import {  createProject, currentProject, projects } from "src\createProject.js";
-import { Task, createNewTask } from "src\index.js";
-import { manageTasks, savedTasks } from "src\manageTasks.js";
+import {  appendToSidebarList, createNewProject, projectFactory } from "src\createProject.js";
+import { Task, createNewTask } from "src\createTask.js";
+import { manageTasks } from "src\manageTasks.js";
+createNewProject()
 createNewTask()
 createProject()
 manageTasks()

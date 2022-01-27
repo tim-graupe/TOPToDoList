@@ -3,12 +3,11 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.savedTasks = exports.manageTasks = void 0;
+exports.manageTasks = void 0;
 
 var _createProject = require("./createProject.js");
 
 var savedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
-exports.savedTasks = savedTasks;
 
 var manageTasks = function manageTasks(project) {
   JSON.stringify(_createProject.projects);

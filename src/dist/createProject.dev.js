@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.projectFactory = exports.appendToSidebarList = exports.projects = exports.currentProject = exports.createProject = void 0;
+exports.projectFactory = exports.createNewProject = exports.appendToSidebarList = exports.projects = exports.currentProject = exports.createProject = void 0;
 
 var _createTask = require("./createTask.js");
 
@@ -48,6 +48,8 @@ var createNewProject = function createNewProject() {
     localStorage.setItem('projects', JSON.stringify(projects));
   }
 };
+
+exports.createNewProject = createNewProject;
 
 var appendToSidebarList = function appendToSidebarList(project) {
   var node = document.createElement('li');

@@ -111,4 +111,4 @@ const manageTasks  = (project) => {
 
 }
 
-export {manageTasks, savedTasks}
+export {manageTasks}
