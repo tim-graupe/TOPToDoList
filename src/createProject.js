@@ -89,4 +89,4 @@ const appendToSidebarList = (project) => {
 }
 projects.forEach(appendToSidebarList);
 
-export { createProject, currentProject, projects }
+export { createProject, currentProject, projects, appendToSidebarList, projectFactory }
