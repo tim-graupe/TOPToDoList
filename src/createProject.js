@@ -10,7 +10,7 @@ projectTitle.setAttribute('id', 'projectTitle');
 
 createProject.addEventListener('click', () => {
     createNewProject();
-});
+}, false);
 
 
 
@@ -89,4 +89,4 @@ const appendToSidebarList = (project) => {
 }
 projects.forEach(appendToSidebarList);
 
-export { createProject, currentProject, projects, appendToSidebarList, createNewProject, projectFactory }
+export { currentProject, projects, createProject, appendToSidebarList, createNewProject, projectFactory }

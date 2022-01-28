@@ -1,5 +1,6 @@
-import {projects, currentProject} from './createProject.js'
+import {projects, projectFactory, createNewProject, currentProject} from './createProject.js'
 let savedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
 
 const manageTasks  = (project) => {
     JSON.stringify(projects)
@@ -111,4 +112,4 @@ const manageTasks  = (project) => {
 
 }
 
-export {manageTasks}
+export {manageTasks, savedTasks}

@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.projectFactory = exports.createNewProject = exports.appendToSidebarList = exports.projects = exports.currentProject = exports.createProject = void 0;
+exports.projectFactory = exports.createNewProject = exports.appendToSidebarList = exports.createProject = exports.projects = exports.currentProject = void 0;
 
 var _createTask = require("./createTask.js");
 
@@ -20,7 +20,7 @@ var projectTitle = document.getElementById('current-project-title');
 projectTitle.setAttribute('id', 'projectTitle');
 createProject.addEventListener('click', function () {
   createNewProject();
-});
+}, false);
 
 var projectFactory = function projectFactory(title) {
   var todos = [];
